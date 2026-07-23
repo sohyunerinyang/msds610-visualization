@@ -1,127 +1,100 @@
 # simple-eda
 
-A tiny pandas-based visualization + EDA package. A couple hundred lines, two
-dependencies (pandas, matplotlib), no CI/CD, no tests — just plain Python
-functions you can import and use.
+A tiny pandas + matplotlib package for fast, good-looking exploratory data
+analysis. A couple hundred lines, two dependencies, no dashboard — just plain
+functions you can import and reuse on any DataFrame.
 
-No web app. No dashboard. Just useful, installable, importable.
+Its house style has one idea: **spend your one bright color on the number that
+matters.** Marks are a muted green; the single key value (a median, a leader)
+is gold, so the eye lands there first.
+
+Demo project: **[The AI Image-Gen Tool Race](#the-ai-image-gen-tool-race)** —
+tracking which generative-image tools are winning developer adoption.
+
+## Install
+
+```bash
+pip install -e .          # editable, from a clone
+```
 
 ## EDA functions
 
-Each one does a single job, takes a DataFrame, and **returns a plain object**
-(a dict, a list, or a pandas Series). Nothing is printed and your DataFrame is
-never changed in place.
+Each does one job, takes a DataFrame, and **returns a plain object** (dict,
+list, or pandas Series). Nothing is printed; the DataFrame is never mutated.
 
 | Function | Returns |
 | --- | --- |
 | `summarize(df)` | dict — shape, column names, dtypes |
 | `missing(df)` | Series — null count per column, highest first |
-| `numeric_columns(df)` | list — names of the numeric columns |
-| `categorical_columns(df)` | list — names of the non-numeric columns |
+| `numeric_columns(df)` | list — numeric column names |
+| `categorical_columns(df)` | list — non-numeric column names |
 
 ## Chart functions
 
-Each takes a DataFrame and **returns a matplotlib `Figure`** (it never calls
-`show` and never touches your DataFrame). Save it with `fig.savefig(...)` or
-display it in a notebook.
+Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
+`show`, never mutates). Save with `fig.savefig(...)` or show it in a notebook.
 
 | Function | Chart |
 | --- | --- |
-| `missing_plot(df)` | horizontal bar — missing count per column |
-| `histogram(df, column)` | distribution of one numeric column |
-| `correlation_heatmap(df)` | diverging heatmap of numeric correlations |
+| `ranked_bar(df, label_col, value_col)` | horizontal ranked bar, leader in gold |
+| `scatter(df, x, y, label_col=, highlight=)` | labeled scatter / traction quadrant |
+| `histogram(df, column)` | distribution with the median bin in gold |
+| `correlation_heatmap(df)` | diverging blue→gray→red heatmap |
+| `missing_plot(df)` | horizontal bar of missing counts |
 
 ### Aesthetic choices
 
-All charts share one deliberate house style so they read as a single system:
+- **One accent color.** Everything is recessive green except the key value,
+  which is gold. Green and gold differ in *both* hue and lightness, so the
+  highlight survives colorblindness (lightness carries it when hue washes out).
+- **Recessive chrome, data first.** Off-white surface, hairline gridlines,
+  muted labels, top/right spines removed.
+- **Direct labels over legends.** Values sit on the marks — nothing to
+  cross-reference.
+- **Diverging = signed.** Correlations use blue↔red with a neutral-gray zero,
+  locked to [-1, 1], because correlation has a sign and gray must mean "none."
 
-- **Colorblind-safe palette.** A single validated blue (`#2a78d6`) for
-  one-series charts; correlations use a blue → gray → red *diverging* ramp
-  because correlation is signed — blue and red pull opposite ways and neutral
-  gray always means "no correlation" (the scale is locked to [-1, 1]).
-- **Recessive chrome, data first.** Off-white surface instead of stark white,
-  hairline gridlines, muted tick labels, and the top/right spines removed — the
-  ink you notice is the data, not the frame.
-- **Direct labels over legends.** Bar counts and correlation values are printed
-  right on the marks, so there's nothing to cross-reference.
+## The AI Image-Gen Tool Race
 
-## Usage
+Which open-source generative-image tools are winning developer adoption? This
+demo reads real GitHub data for eight tools and produces two charts:
 
-```python
-import pandas as pd
-import simple_eda as eda
-
-df = pd.read_csv("data.csv")
-
-# EDA — plain objects
-eda.summarize(df)            # {'rows': ..., 'columns': ..., 'column_names': [...], 'dtypes': {...}}
-eda.missing(df)              # pandas Series of null counts
-eda.numeric_columns(df)      # ['age', 'price', ...]
-eda.categorical_columns(df)  # ['city', 'category', ...]
-
-# Charts — matplotlib Figures
-eda.missing_plot(df).savefig("missing.png", bbox_inches="tight")
-eda.histogram(df, "income").savefig("income.png", bbox_inches="tight")
-eda.correlation_heatmap(df).savefig("corr.png", bbox_inches="tight")
+```bash
+python scripts/fetch_ai_tools.py      # refresh the data (live GitHub API)
+python examples/ai_image_tool_race.py # redraw the charts into examples/
 ```
+
+- **`examples/01_stars.png`** — GitHub stars per tool (mindshare); A1111 leads.
+- **`examples/02_traction.png`** — a *traction quadrant*: installed base (stars)
+  vs momentum (stars/day since launch). ComfyUI leads the modern pack.
+
+Data snapshot lives in `data/`; re-run the fetcher monthly to keep it current.
 
 ## Folder shape
 
 ```
 msds610-visualization/
-├── src/
-│   └── simple_eda/
-│       ├── __init__.py
-│       ├── core.py
-│       └── plots.py
+├── src/simple_eda/
+│   ├── __init__.py
+│   ├── core.py            # EDA helpers
+│   └── plots.py           # chart functions + house style
+├── data/                  # dated GitHub snapshots (CSV)
+├── scripts/fetch_ai_tools.py   # live data refresher
+├── examples/ai_image_tool_race.py
 ├── README.md
 ├── pyproject.toml
 └── LICENSE
 ```
 
-## Local development (editable install)
-
-```bash
-git clone <this repo>
-cd msds610-visualization
-python -m pip install -e .
-```
-
-Editable mode means your source edits take effect immediately — no reinstall
-needed.
-
-## Publishing (for maintainers)
-
-Build a wheel and a source distribution:
+## Publishing (optional, for maintainers)
 
 ```bash
 python -m pip install --upgrade build twine
-python -m build          # creates dist/*.whl and dist/*.tar.gz
+python -m build                                   # dist/*.whl + *.tar.gz
+python -m twine upload --repository testpypi dist/*   # TestPyPI first
+python -m twine upload dist/*                          # then PyPI
 ```
 
-Upload to **TestPyPI** first, then install from it to confirm it works:
-
-```bash
-python -m twine upload --repository testpypi dist/*
-python -m pip install --index-url https://test.pypi.org/simple/ \
-    --extra-index-url https://pypi.org/simple/ simple-eda-syang120
-```
-
-Then upload to the real **PyPI**:
-
-```bash
-python -m twine upload dist/*
-python -m pip install simple-eda-syang120
-```
-
-### Authentication — use API tokens, not passwords
-
-Create a token at <https://test.pypi.org/manage/account/token/> (and
-<https://pypi.org/manage/account/token/> for PyPI). When `twine` prompts:
-
-- username: `__token__`
-- password: the token (starts with `pypi-...`)
-
-**Never commit tokens or secrets.** Keep them out of the repo — put them in
-`~/.pypirc` (chmod 600) or the `TWINE_USERNAME` / `TWINE_PASSWORD` environment
-variables instead.
+**Use API tokens, not passwords.** When `twine` prompts: username `__token__`,
+password the `pypi-...` token. **Never commit tokens** — keep them in
+`~/.pypirc` (chmod 600) or `TWINE_USERNAME` / `TWINE_PASSWORD` env vars.

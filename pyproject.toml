@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple-eda-syang120"
-version = "0.2.0"
-description = "Tiny pandas EDA helpers plus a few styled matplotlib charts"
+version = "0.3.0"
+description = "Tiny pandas EDA helpers plus styled matplotlib charts"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }

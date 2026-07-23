@@ -1,0 +1,76 @@
+# 2-minute video script — simple-eda / The AI Image-Gen Tool Race
+
+Target: ~2:00. Record to Zoom cloud, turn OFF the passcode, and **test the link
+in an incognito window before submitting** (this is the #1 thing graders check).
+
+---
+
+## 0:00–0:25 — Install, import, README  *(requirement #1)*
+
+> "Hi, I'm Sohyun. This is **simple-eda**, a small pandas + matplotlib library I
+> built for fast, good-looking exploratory analysis. Let me show it working."
+
+- Terminal: `pip install -e .`
+- Then: `python -c "import simple_eda as eda; print(eda.__all__)"`
+- Scroll the **README** — pause on the function tables and the "Aesthetic
+  choices" section.
+
+> "One dependency idea drives the whole look: spend your one bright color on the
+> number that matters."
+
+## 0:25–1:20 — My two favorite charts  *(requirement #2 — aesthetics)*
+
+> "I pointed it at a real question: **which open-source AI image-generation tools
+> are winning developer adoption?** I pulled live GitHub data for eight tools."
+
+**Chart 1 — `examples/01_stars.png` (ranked bar):**
+> "This is `ranked_bar`. Every bar is a muted green except the leader — A1111
+> with 164,000 stars — which is gold. I sort so the ranking *is* the shape, and
+> I put the numbers right on the bars, so there's no legend to cross-reference.
+> Green and gold differ in both hue and brightness, so the highlight still reads
+> for colorblind viewers."
+
+**Chart 2 — `examples/02_traction.png` (traction quadrant):**
+> "This is `scatter` as a *traction quadrant*: installed base on the x-axis, log
+> scale, and momentum — stars per day since launch — on the y. Top-right is
+> 'big and still growing fast.' **ComfyUI**, in gold, is the modern leader:
+> nearly the mindshare of A1111 but far younger. That's the kind of one-slide
+> read a GTM or product team actually acts on."
+
+## 1:20–1:50 — Two problems I hit  *(requirement #3)*
+
+> "**Problem one: coloring just one bar.** matplotlib's `hist` returns the
+> counts, the bin edges, *and* the bar objects. I used `np.digitize` to find the
+> bin holding the median, then recolored that single bar gold — instead of
+> repainting the series."
+
+> "**Problem two: the metrics weren't comparable and some were missing.** Stars,
+> PyPI downloads, and Hugging Face downloads live on totally different scales,
+> and not every tool publishes all three. So I standardized on one signal every
+> tool exposes — GitHub — and derived a lifetime velocity from it, rather than
+> faking a composite that would quietly treat missing data as zero."
+
+## 1:50–2:00 — Close
+
+> "So: a real, installable library, a real dataset, and charts designed to make
+> one number obvious. The fetch script re-pulls the data monthly, so this stays
+> current. Thanks for watching."
+
+---
+
+## LinkedIn caption (post the two PNGs)
+
+> Which open-source AI image tools are actually winning developer adoption?
+>
+> I built a small Python library (pandas + matplotlib) and pointed it at live
+> GitHub data for 8 generative-image tools. Two takeaways:
+>
+> 📊 A1111 WebUI still leads on raw mindshare (164K★), but…
+> 🚀 ComfyUI is the momentum story — nearly the same following in half the time.
+>
+> Design principle I stuck to: spend ONE bright color on the number that matters,
+> and keep everything else quiet. (Green + gold — go Dons 💚💛)
+>
+> Data refreshes monthly, so this is a living tracker. Code + charts in comments.
+>
+> #dataviz #python #generativeAI #productanalytics #gtm

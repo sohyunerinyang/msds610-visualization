@@ -40,7 +40,6 @@ Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
 | `scatter(df, x, y, label_col=, highlight=)` | labeled scatter / traction quadrant |
 | `histogram(df, column)` | distribution with the median bin in gold |
 | `correlation_heatmap(df)` | diverging blue→gray→red heatmap |
-| `missing_plot(df)` | horizontal bar of missing counts |
 
 ### Aesthetic choices
 

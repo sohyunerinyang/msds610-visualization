@@ -13,4 +13,4 @@ authors = [{ name = "Sohyun Yang" }]
 dependencies = ["pandas"]
 
 [tool.setuptools.packages.find]
-include = ["simple_eda*"]
+where = ["src"]

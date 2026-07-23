@@ -36,22 +36,22 @@ Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
 
 | Function | Chart |
 | --- | --- |
+| `radial_bar(df, label_col, value_col, highlight=)` | circular bar chart; length + color = magnitude |
+| `bubble(df, x, y, size_col, color_col=, highlight=)` | bubble "market map"; size + color add dimensions |
 | `ranked_bar(df, label_col, value_col)` | horizontal ranked bar, leader in gold |
-| `scatter(df, x, y, label_col=, highlight=)` | labeled scatter / traction quadrant |
-| `histogram(df, column)` | distribution with the median bin in gold |
-| `correlation_heatmap(df)` | diverging blue→gray→red heatmap |
 
 ### Aesthetic choices
 
 - **One accent color.** Everything is recessive green except the key value,
   which is gold. Green and gold differ in *both* hue and lightness, so the
   highlight survives colorblindness (lightness carries it when hue washes out).
+- **Color carries meaning.** In `radial_bar`, color *and* length both encode
+  magnitude (a light→dark green ramp); in `bubble`, size and an optional
+  category color add dimensions without a second chart.
 - **Recessive chrome, data first.** Off-white surface, hairline gridlines,
   muted labels, top/right spines removed.
 - **Direct labels over legends.** Values sit on the marks — nothing to
-  cross-reference.
-- **Diverging = signed.** Correlations use blue↔red with a neutral-gray zero,
-  locked to [-1, 1], because correlation has a sign and gray must mean "none."
+  cross-reference (a legend appears only when color encodes a category).
 - **Attribution = integrity.** Every chart takes a `source=` footer and honest
   metric labels. See [`docs/DESIGN_RATIONALE.md`](docs/DESIGN_RATIONALE.md) for
   how the whole design maps to McCandless's four lenses of good information
@@ -67,9 +67,11 @@ python scripts/fetch_ai_tools.py      # refresh the data (live GitHub API)
 python examples/ai_image_tool_race.py # redraw the charts into examples/
 ```
 
-- **`examples/01_stars.png`** — GitHub stars per tool (mindshare); A1111 leads.
-- **`examples/02_traction.png`** — a *traction quadrant*: installed base (stars)
-  vs momentum (stars/day since launch). ComfyUI leads the modern pack.
+- **`examples/01_radial.png`** — a radial bar of GitHub stars per tool
+  (mindshare); A1111 leads, ComfyUI in gold.
+- **`examples/02_market_map.png`** — a bubble *market map*: installed base
+  (stars) vs momentum (stars/day), bubble size = forks. ComfyUI leads the
+  modern pack.
 
 Data snapshot lives in `data/`; re-run the fetcher monthly to keep it current.
 

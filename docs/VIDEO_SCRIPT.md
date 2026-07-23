@@ -23,26 +23,25 @@ in an incognito window before submitting** (this is the #1 thing graders check).
 > "I pointed it at a real question: **which open-source AI image-generation tools
 > are winning developer adoption?** I pulled live GitHub data for eight tools."
 
-**Chart 1 — `examples/01_stars.png` (ranked bar):**
-> "This is `ranked_bar`. Every bar is a muted green except the leader — A1111
-> with 164,000 stars — which is gold. I sort so the ranking *is* the shape, and
-> I put the numbers right on the bars, so there's no legend to cross-reference.
-> Green and gold differ in both hue and brightness, so the highlight still reads
-> for colorblind viewers."
+**Chart 1 — `examples/01_radial.png` (radial bar):**
+> "This is `radial_bar` — the race as a circular bar chart. Length *and* color
+> both encode stars, so the biggest tools read instantly; the modern leader,
+> ComfyUI, is pulled out in gold. Green and gold differ in both hue and
+> brightness, so the highlight still reads for colorblind viewers."
 
-**Chart 2 — `examples/02_traction.png` (traction quadrant):**
-> "This is `scatter` as a *traction quadrant*: installed base on the x-axis, log
-> scale, and momentum — stars per day since launch — on the y. Top-right is
-> 'big and still growing fast.' **ComfyUI**, in gold, is the modern leader:
-> nearly the mindshare of A1111 but far younger. That's the kind of one-slide
-> read a GTM or product team actually acts on."
+**Chart 2 — `examples/02_market_map.png` (bubble market map):**
+> "This is `bubble` as a *market map*: installed base on the x-axis, log scale;
+> momentum — stars per day since launch — on the y; and bubble size is forks,
+> a proxy for contributor pull. Top-right is 'big and still growing fast.'
+> **ComfyUI**, in gold, is the modern leader: nearly the mindshare of A1111 but
+> far younger. That's the kind of one-slide read a GTM or product team acts on."
 
 ## 1:20–1:50 — Two problems I hit  *(requirement #3)*
 
-> "**Problem one: coloring just one bar.** matplotlib's `hist` returns the
-> counts, the bin edges, *and* the bar objects. I used `np.digitize` to find the
-> bin holding the median, then recolored that single bar gold — instead of
-> repainting the series."
+> "**Problem one: encoding three variables without clutter.** A plain scatter
+> shows two. I scaled bubble *area* to a third (forks) and split the plane with
+> median guide lines, so 'big and fast-growing' becomes a place on the chart —
+> readable, not a wall of dots."
 
 > "**Problem two: the metrics weren't comparable and some were missing.** Stars,
 > PyPI downloads, and Hugging Face downloads live on totally different scales,

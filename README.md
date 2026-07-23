@@ -1,12 +1,12 @@
 # simple-eda
 
-A tiny pandas-based exploratory data analysis package. A couple hundred lines,
-one dependency (pandas), no CI/CD, no tests — just plain Python functions you
-can import and use.
+A tiny pandas-based visualization + EDA package. A couple hundred lines, two
+dependencies (pandas, matplotlib), no CI/CD, no tests — just plain Python
+functions you can import and use.
 
 No web app. No dashboard. Just useful, installable, importable.
 
-## The functions
+## EDA functions
 
 Each one does a single job, takes a DataFrame, and **returns a plain object**
 (a dict, a list, or a pandas Series). Nothing is printed and your DataFrame is
@@ -19,6 +19,32 @@ never changed in place.
 | `numeric_columns(df)` | list — names of the numeric columns |
 | `categorical_columns(df)` | list — names of the non-numeric columns |
 
+## Chart functions
+
+Each takes a DataFrame and **returns a matplotlib `Figure`** (it never calls
+`show` and never touches your DataFrame). Save it with `fig.savefig(...)` or
+display it in a notebook.
+
+| Function | Chart |
+| --- | --- |
+| `missing_plot(df)` | horizontal bar — missing count per column |
+| `histogram(df, column)` | distribution of one numeric column |
+| `correlation_heatmap(df)` | diverging heatmap of numeric correlations |
+
+### Aesthetic choices
+
+All charts share one deliberate house style so they read as a single system:
+
+- **Colorblind-safe palette.** A single validated blue (`#2a78d6`) for
+  one-series charts; correlations use a blue → gray → red *diverging* ramp
+  because correlation is signed — blue and red pull opposite ways and neutral
+  gray always means "no correlation" (the scale is locked to [-1, 1]).
+- **Recessive chrome, data first.** Off-white surface instead of stark white,
+  hairline gridlines, muted tick labels, and the top/right spines removed — the
+  ink you notice is the data, not the frame.
+- **Direct labels over legends.** Bar counts and correlation values are printed
+  right on the marks, so there's nothing to cross-reference.
+
 ## Usage
 
 ```python
@@ -27,10 +53,16 @@ import simple_eda as eda
 
 df = pd.read_csv("data.csv")
 
+# EDA — plain objects
 eda.summarize(df)            # {'rows': ..., 'columns': ..., 'column_names': [...], 'dtypes': {...}}
 eda.missing(df)              # pandas Series of null counts
 eda.numeric_columns(df)      # ['age', 'price', ...]
 eda.categorical_columns(df)  # ['city', 'category', ...]
+
+# Charts — matplotlib Figures
+eda.missing_plot(df).savefig("missing.png", bbox_inches="tight")
+eda.histogram(df, "income").savefig("income.png", bbox_inches="tight")
+eda.correlation_heatmap(df).savefig("corr.png", bbox_inches="tight")
 ```
 
 ## Folder shape
@@ -40,7 +72,8 @@ msds610-visualization/
 ├── src/
 │   └── simple_eda/
 │       ├── __init__.py
-│       └── core.py
+│       ├── core.py
+│       └── plots.py
 ├── README.md
 ├── pyproject.toml
 └── LICENSE

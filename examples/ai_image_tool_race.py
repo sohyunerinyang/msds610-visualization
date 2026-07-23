@@ -14,6 +14,7 @@ import pandas as pd
 import simple_eda as eda
 
 df = pd.read_csv("data/ai_image_tools_2026-07.csv")
+SOURCE = "Source: GitHub API · snapshot 23 Jul 2026 · n=8 open-source tools"
 
 # --- a quick look, the boring EDA way -----------------------------------------
 print(eda.summarize(df))
@@ -22,15 +23,23 @@ print("numeric:", eda.numeric_columns(df))
 # --- chart 1: who has the mindshare -------------------------------------------
 eda.ranked_bar(
     df, "tool", "stars",
-    title="Who owns developer mindshare in AI image tools? (GitHub stars, Jul 2026)",
+    title="Who owns developer mindshare in AI image tools?",
+    subtitle="GitHub stars — A1111 still leads, but ComfyUI is closing fast",
+    xlabel="GitHub stars",
+    source=SOURCE,
 ).savefig("examples/01_stars.png", dpi=140, bbox_inches="tight")
 
 # --- chart 2: the traction quadrant -------------------------------------------
-# x = installed base (total stars, log), y = momentum (stars/day since launch)
+# x = installed base (total stars, log), y = momentum (avg stars/day since launch)
 eda.scatter(
     df, "stars", "stars_per_day", label_col="tool", highlight="ComfyUI",
     logx=True,
-    title="Traction quadrant: installed base vs momentum (ComfyUI leads the modern pack)",
+    title="Traction quadrant: reach vs momentum",
+    subtitle="Top-right = big AND fast-growing. ComfyUI leads the modern pack.",
+    xlabel="Installed base — GitHub stars",
+    ylabel="Momentum — avg stars/day since launch",
+    vline=df["stars"].median(), hline=df["stars_per_day"].median(),
+    source=SOURCE + " · momentum is a LIFETIME average, not last-30-days",
 ).savefig("examples/02_traction.png", dpi=140, bbox_inches="tight")
 
 print("saved examples/01_stars.png and examples/02_traction.png")

@@ -53,6 +53,10 @@ Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
   cross-reference.
 - **Diverging = signed.** Correlations use blue↔red with a neutral-gray zero,
   locked to [-1, 1], because correlation has a sign and gray must mean "none."
+- **Attribution = integrity.** Every chart takes a `source=` footer and honest
+  metric labels. See [`docs/DESIGN_RATIONALE.md`](docs/DESIGN_RATIONALE.md) for
+  how the whole design maps to McCandless's four lenses of good information
+  design (Interestingness × Function × Form × Integrity).
 
 ## The AI Image-Gen Tool Race
 

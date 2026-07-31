@@ -35,6 +35,16 @@ API), and (3) it **exercises both charts** — a ranking and a two-axis landscap
 A monthly fetch script keeps it fresh, so it doubles as a living "state of the
 market" readout you can re-run and share.
 
+**Why ComfyUI is the one painted gold (say this out loud)**
+The gold is a *deliberate editorial highlight*, not "the winner." ComfyUI is
+**not** the biggest — A1111 leads on stars (164k vs 122k). I spotlight ComfyUI
+because it's the **momentum pick**: nearly A1111's following in about half the
+time. So the single accent color answers a specific question — *"who's the one
+to watch?"* — and I state it as my read, not as a fact the data forces. Pass
+`highlight="A1111 WebUI"` and the gold moves; pass `highlight=None` and there's
+no gold at all. That honesty (accent = a chosen point of view) is the
+McCandless "integrity" lens.
+
 **Why these two charts are worth knowing (the "so what")**
 - **GitHub stars by tool** — stars are a *free, public proxy for developer
   mindshare*: who the community is actually adopting. One sortable number ranks
@@ -79,10 +89,11 @@ market" readout you can re-run and share.
 > Second: `bubble`, a market map — reach on the x, momentum on the y, bubble size
 > is forks, and the dashed lines split it into quadrants. That's the point:
 > top-right means big *and* still accelerating, so you see incumbents versus
-> breakouts in one view. ComfyUI, in gold, is the momentum story — nearly A1111's
-> reach in half the time. One recessive green plus a single gold accent — my
-> school colors — differ in hue *and* brightness, so it reads for colorblind
-> viewers too."
+> breakouts in one view. I paint **ComfyUI** gold on purpose — not because it's
+> biggest, A1111 is, but because it's the momentum pick: nearly A1111's reach in
+> half the time, so it's the one to watch. One recessive green plus a single gold
+> accent — my school colors — differ in hue *and* brightness, so it reads for
+> colorblind viewers too."
 
 ### 1:34–1:52 — two problems I hit  *(requirement #3)*
 > "Two problems. First, centering the radial chart — a tight crop left it

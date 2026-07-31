@@ -7,6 +7,7 @@ column names, so there are no title/label parameters to pass."""
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib.patheffects as pe
 from matplotlib.ticker import FuncFormatter
 import pandas as pd
 
@@ -88,8 +89,12 @@ def bubble(df, x, y, size_col, label_col=None, color_col=None, highlight=None):
     else:
         colors = [GOLD if lab == str(highlight) else GREEN for lab in labels]
     ax.scatter(d[x], d[y], s=sizes, c=colors, alpha=0.85, edgecolor=SURFACE, linewidth=1.5, zorder=3)
-    for xi, yi, lab in zip(d[x], d[y], labels):
-        ax.annotate(lab, (xi, yi), ha="center", va="center", fontsize=9, color=INK, zorder=5)
+    halo = [pe.withStroke(linewidth=3, foreground=SURFACE)]   # keep labels legible on any fill
+    for xi, yi, lab, sz in zip(d[x], d[y], labels, sizes):
+        off = (sz / np.pi) ** 0.5 + 6                         # sit just above each bubble
+        ax.annotate(lab, (xi, yi), xytext=(0, off), textcoords="offset points",
+                    ha="center", va="bottom", fontsize=10, weight="bold",
+                    color=INK, zorder=6, path_effects=halo)
     ax.grid(True, color=GRID, linewidth=1)
     ax.xaxis.set_major_formatter(FuncFormatter(_k)); ax.yaxis.set_major_formatter(FuncFormatter(_k))
     ax.margins(0.18)                                     # symmetric breathing room

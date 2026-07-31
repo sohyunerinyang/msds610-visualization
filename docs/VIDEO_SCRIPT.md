@@ -35,6 +35,17 @@ API), and (3) it **exercises both charts** — a ranking and a two-axis landscap
 A monthly fetch script keeps it fresh, so it doubles as a living "state of the
 market" readout you can re-run and share.
 
+**Why these two charts are worth knowing (the "so what")**
+- **GitHub stars by tool** — stars are a *free, public proxy for developer
+  mindshare*: who the community is actually adopting. One sortable number ranks
+  the whole field, so "who leads" is answerable at a glance.
+- **The market map** — decision-useful because it combines *reach* (installed
+  base), *momentum* (growth), and *contributor pull* (forks) in one view. You
+  see not just who's biggest but who's **accelerating** — incumbents vs.
+  breakouts. Top-right = big AND still growing = where a product, GTM, or
+  investing team places attention. That's the difference between a chart that
+  *looks* nice and one that *drives a decision*.
+
 ---
 
 ## The spoken script (~2:00)
@@ -52,26 +63,28 @@ market" readout you can re-run and share.
 > as eda`. `eda.__all__` shows the public API: four EDA helpers and two charts.
 > And here's the README — install, the function table, and the design choices."
 
-### 0:40–1:00 — the data, and reusability
+### 0:38–0:52 — the data, and reusability
 > "I pointed it at a real question — which open-source AI image tools are winning
-> developer adoption — using live GitHub data for eight tools. I picked it
-> because it's current, verifiable, and it exercises both charts. But the same
-> functions work on any table: products and revenue, countries and population —
-> `radial_bar` doesn't care what the rows are."
+> developer adoption — using live GitHub data for eight tools: current,
+> verifiable, and it exercises both charts. The same functions work on any table
+> though — products and revenue, countries and population."
 
-### 1:00–1:35 — my two favorite charts  *(requirement #2 — aesthetics)*
+### 0:52–1:34 — my two favorite charts  *(requirement #2 — aesthetics + why)*
 > "First favorite: `radial_bar` — the race as a circular bar chart. Length *and*
-> color both encode stars, and the modern leader, ComfyUI, is pulled out in gold.
-> I use one recessive green plus a single gold accent — my school colors — and
-> they differ in both hue *and* brightness, so the highlight still reads for
-> colorblind viewers.
+> color both encode stars, ComfyUI is pulled out in gold, and the hub repeats the
+> leader so the headline is unmissable. Why stars? They're a free, public proxy
+> for developer mindshare — who the community actually adopts — so one ring ranks
+> the whole field at a glance.
 >
-> Second: `bubble`, a market map — stars on the x, momentum on the y, and bubble
-> size is forks, a third variable in one view. ComfyUI, high and to the right in
-> gold, is the momentum story: nearly A1111's reach in half the time. I kept the
-> plot centered and the bubbles large enough to read at a glance."
+> Second: `bubble`, a market map — reach on the x, momentum on the y, bubble size
+> is forks, and the dashed lines split it into quadrants. That's the point:
+> top-right means big *and* still accelerating, so you see incumbents versus
+> breakouts in one view. ComfyUI, in gold, is the momentum story — nearly A1111's
+> reach in half the time. One recessive green plus a single gold accent — my
+> school colors — differ in hue *and* brightness, so it reads for colorblind
+> viewers too."
 
-### 1:35–1:55 — two problems I hit  *(requirement #3)*
+### 1:34–1:52 — two problems I hit  *(requirement #3)*
 > "Two problems. First, centering the radial chart — a tight crop left it
 > lopsided and the small labels crowded the middle, so I fixed the axes to a
 > centered square and moved every label to one outer ring. Second, the adoption

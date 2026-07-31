@@ -56,6 +56,15 @@ def radial_bar(df, label_col, value_col, highlight=None):
                 rotation=rot, rotation_mode="anchor", ha=ha, va="center", fontsize=9,
                 color=INK if labels[i] == str(highlight) else SECONDARY,
                 weight="bold" if labels[i] == str(highlight) else "normal")
+    if str(highlight) in labels:                        # headline the story in the hub
+        hv = values[labels.index(str(highlight))]
+        ax.text(0.5, 0.54, str(highlight), transform=ax.transAxes, ha="center",
+                va="center", color=GOLD, fontsize=13, weight="bold")
+        ax.text(0.5, 0.45, f"{hv:,.0f}", transform=ax.transAxes, ha="center",
+                va="center", color=SECONDARY, fontsize=10)
+    else:
+        ax.text(0.5, 0.5, value_col, transform=ax.transAxes, ha="center",
+                va="center", color=MUTED, fontsize=11)
     fig.suptitle(f"{value_col} by {label_col}", y=0.95, fontsize=15, weight="bold", color=INK)
     return fig
 
@@ -69,6 +78,8 @@ def bubble(df, x, y, size_col, label_col=None, color_col=None, highlight=None):
     sizes = 800 + (s - s.min()) / (np.ptp(s) or 1) * (4600 - 800)   # never too small
 
     fig, ax = plt.subplots(figsize=(9, 7.5)); _style(ax)
+    ax.axvline(d[x].median(), color=BASELINE, lw=1, ls=(0, (4, 4)), zorder=1)   # market-map
+    ax.axhline(d[y].median(), color=BASELINE, lw=1, ls=(0, (4, 4)), zorder=1)   # 2x2 quadrants
     labels = d[label_col].astype(str) if label_col else pd.Series([""] * len(d), index=d.index)
     if color_col:
         cats = list(dict.fromkeys(d[color_col]))

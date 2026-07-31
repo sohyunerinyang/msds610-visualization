@@ -34,11 +34,13 @@ list, or pandas Series). Nothing is printed; the DataFrame is never mutated.
 Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
 `show`, never mutates). Save with `fig.savefig(...)` or show it in a notebook.
 
+Two charts, both with small no-frills signatures (titles derive from the
+column names — rename your columns to friendly labels for a nice title):
+
 | Function | Chart |
 | --- | --- |
-| `radial_bar(df, label_col, value_col, highlight=)` | circular bar chart; length + color = magnitude |
-| `bubble(df, x, y, size_col, color_col=, highlight=)` | bubble "market map"; size + color add dimensions |
-| `ranked_bar(df, label_col, value_col)` | horizontal ranked bar, leader in gold |
+| `radial_bar(df, label_col, value_col, highlight=None)` | circular bar chart; length + color = magnitude |
+| `bubble(df, x, y, size_col, label_col=None, color_col=None, highlight=None)` | bubble "market map"; size + color add dimensions |
 
 ### Aesthetic choices
 
@@ -48,14 +50,17 @@ Each takes a DataFrame and **returns a matplotlib `Figure`** (never calls
 - **Color carries meaning.** In `radial_bar`, color *and* length both encode
   magnitude (a light→dark green ramp); in `bubble`, size and an optional
   category color add dimensions without a second chart.
+- **Centered & symmetric.** The plot sits in the middle of the figure with
+  balanced margins; bubbles are sized large enough to read at a glance.
 - **Recessive chrome, data first.** Off-white surface, hairline gridlines,
   muted labels, top/right spines removed.
 - **Direct labels over legends.** Values sit on the marks — nothing to
   cross-reference (a legend appears only when color encodes a category).
-- **Attribution = integrity.** Every chart takes a `source=` footer and honest
-  metric labels. See [`docs/DESIGN_RATIONALE.md`](docs/DESIGN_RATIONALE.md) for
-  how the whole design maps to McCandless's four lenses of good information
-  design (Interestingness × Function × Form × Integrity).
+
+See [`docs/DESIGN_RATIONALE.md`](docs/DESIGN_RATIONALE.md) for how the design
+maps to McCandless's four lenses (Interestingness × Function × Form ×
+Integrity). Source attribution lives in the README / video narration, since the
+chart signatures stay minimal.
 
 ## The AI Image-Gen Tool Race
 

@@ -30,18 +30,18 @@ in an incognito window before submitting** (this is the #1 thing graders check).
 > brightness, so the highlight still reads for colorblind viewers."
 
 **Chart 2 — `examples/02_market_map.png` (bubble market map):**
-> "This is `bubble` as a *market map*: installed base on the x-axis, log scale;
-> momentum — stars per day since launch — on the y; and bubble size is forks,
-> a proxy for contributor pull. Top-right is 'big and still growing fast.'
+> "This is `bubble` as a *market map*: installed base — GitHub stars — on the
+> x-axis; momentum — stars per day since launch — on the y; and bubble size is
+> forks, a proxy for contributor pull. Top-right is 'big and still growing fast.'
 > **ComfyUI**, in gold, is the modern leader: nearly the mindshare of A1111 but
 > far younger. That's the kind of one-slide read a GTM or product team acts on."
 
 ## 1:20–1:50 — Two problems I hit  *(requirement #3)*
 
-> "**Problem one: encoding three variables without clutter.** A plain scatter
-> shows two. I scaled bubble *area* to a third (forks) and split the plane with
-> median guide lines, so 'big and fast-growing' becomes a place on the chart —
-> readable, not a wall of dots."
+> "**Problem one: centering the radial chart.** Saving with a tight crop left it
+> lopsided, and the small-value labels crowded the middle. I fixed the polar
+> axes to a centered square and moved every label onto one outer ring, so the
+> chart reads symmetric and balanced."
 
 > "**Problem two: the metrics weren't comparable and some were missing.** Stars,
 > PyPI downloads, and Hugging Face downloads live on totally different scales,
